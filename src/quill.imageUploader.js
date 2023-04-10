@@ -147,6 +147,7 @@ class ImageUploader {
 
     this.options.upload(file).then(
       (imageUrl) => {
+        if (!imageUrl) return;
         this.insertToEditor(imageUrl);
       },
       (error) => {
@@ -194,18 +195,23 @@ class ImageUploader {
   // eslint-disable-next-line max-len
   // The length of the insert delta from insertBase64Image can vary depending on what part of the line the insert occurs
   calculatePlaceholderInsertLength() {
-    return this.placeholderDelta.ops.reduce((accumulator, deltaOperation) => {
-      if (deltaOperation.hasOwnProperty('insert')) accumulator++;
+    if (this.placeholderDelta && this.placeholderDelta.ops) {
+      return this.placeholderDelta.ops.reduce((accumulator, deltaOperation) => {
+        if (deltaOperation.hasOwnProperty('insert')) accumulator++;
 
-      return accumulator;
-    }, 0);
+        return accumulator;
+      }, 0);
+    }
+    return 0;
   }
 
   removeBase64Image() {
     const { range } = this;
     const lengthToDelete = this.calculatePlaceholderInsertLength();
 
-    this.quill.deleteText(range.index, lengthToDelete, 'user');
+    if (lengthToDelete > 0) {
+      this.quill.deleteText(range.index, lengthToDelete, 'user');
+    }
   }
 }
 

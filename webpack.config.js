@@ -1,23 +1,23 @@
-const path = require("path");
-const TerserPlugin = require("terser-webpack-plugin");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = [
   {
     entry: {
-      "quill.imageUploader": "./src/quill.imageUploader.js",
-      demo: "./src/demo.js",
+      'quill.imageUploader': './src/quill.imageUploader.js',
+      demo: './src/demo.js',
     },
     output: {
-      filename: "[name].min.js",
-      path: path.resolve(__dirname, "dist"),
+      filename: '[name].min.js',
+      path: path.resolve(__dirname, 'dist'),
     },
     devServer: {
-      //contentBase: './src',
+      // contentBase: './src',
       https: true,
     },
     externals: {
-      quill: "Quill",
+      quill: 'Quill',
     },
     optimization: {
       minimize: true,
@@ -29,7 +29,7 @@ module.exports = [
           sourceMap: true, // Must be set to true if using source-maps in production
           terserOptions: {
             // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
-            extractComments: "all",
+            extractComments: 'all',
             compress: {
               drop_console: false,
             },
@@ -44,7 +44,7 @@ module.exports = [
           use: ExtractTextPlugin.extract({
             use: [
               {
-                loader: "css-loader",
+                loader: 'css-loader',
               },
             ],
           }),
@@ -53,11 +53,11 @@ module.exports = [
           test: /\.js$/,
           exclude: /node_modules/,
           use: {
-            loader: "babel-loader",
+            loader: 'babel-loader',
           },
         },
       ],
     },
-    plugins: [new ExtractTextPlugin("quill.imageUploader.min.css")],
+    plugins: [new ExtractTextPlugin('quill.imageUploader.min.css')],
   },
 ];
