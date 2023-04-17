@@ -105,21 +105,20 @@ class ImageUploader {
       const items = clipboard.items || clipboard.files;
       const IMAGE_MIME_REGEX = /^image\/(jpe?g|gif|png|svg|webp)$/i;
 
-      for (let i = 0; i < items.length; i++) {
-        if (IMAGE_MIME_REGEX.test(items[i].type)) {
-          const file = items[i].getAsFile ? items[i].getAsFile() : items[i];
+      const oneFile = items[0];
+      if (IMAGE_MIME_REGEX.test(oneFile.type)) {
+        const file = oneFile.getAsFile ? oneFile.getAsFile() : oneFile;
 
-          if (file) {
+        if (file) {
+          this.quill.focus();
+          this.range = this.quill.getSelection();
+          evt.preventDefault();
+          setTimeout(() => {
+            this.fromPaste = true;
             this.quill.focus();
             this.range = this.quill.getSelection();
-            evt.preventDefault();
-            setTimeout(() => {
-              this.fromPaste = true;
-              this.quill.focus();
-              this.range = this.quill.getSelection();
-              this.readAndUploadFile(file);
-            }, 0);
-          }
+            this.readAndUploadFile(file);
+          }, 0);
         }
       }
     }
