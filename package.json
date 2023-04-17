@@ -1,6 +1,6 @@
 {
   "name": "quill-image-uploader1",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "repository": "https://github.com/CracKerMe/quill-image-uploader",
   "description": "A module for Quill rich text editor to allow images to be uploaded to a server instead of being base64 encoded. Adds a button to the toolbar for users to click, also handles drag,dropped and pasted images.",
   "main": "src/quill.imageUploader.js",
